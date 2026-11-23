@@ -19,7 +19,7 @@ export default function InventoryAnalytics() {
       setLoading(true);
       setError("");
       try {
-        const res = await axios.get("http://localhost:5000/api/inventory");
+        const res = await axios.get("https://circulora-backend.onrender.com/api/inventory");
         setInventory(Array.isArray(res.data) ? res.data : []);
       } catch (err) {
         console.error("Failed to load inventory for analytics", err);

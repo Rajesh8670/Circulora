@@ -33,7 +33,7 @@ const EmployeeManagement = () => {
   const fetchEmployees = async () => {
     try {
       setLoading(true);
-      let url = 'http://localhost:5000/api/employees';
+      let url = 'https://circulora-backend.onrender.com/api/employees';
       
       if (searchTerm.trim()) {
         // Add search query that matches from start of name
@@ -340,8 +340,8 @@ const EmployeeManagement = () => {
     try {
       setIsSubmitting(true);
       const url = editingEmployee 
-        ? `http://localhost:5000/api/employees/${editingEmployee._id}`
-        : 'http://localhost:5000/api/employees';
+        ? `https://circulora-backend.onrender.com/api/employees/${editingEmployee._id}`
+        : 'https://circulora-backend.onrender.com/api/employees';
       
       const method = editingEmployee ? 'PUT' : 'POST';
       
@@ -442,7 +442,7 @@ const EmployeeManagement = () => {
     if (window.confirm('Are you sure you want to delete this employee? This action cannot be undone.')) {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:5000/api/employees/${id}`, {
+        const response = await fetch(`https://circulora-backend.onrender.com/api/employees/${id}`, {
           method: 'DELETE'
         });
 

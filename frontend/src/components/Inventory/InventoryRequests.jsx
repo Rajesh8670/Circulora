@@ -22,7 +22,7 @@ const InventoryRequests = () => {
   const fetchProductionRequests = async () => {
     try {
       setLoading(true);
-      const res = await axios.get("http://localhost:5000/api/production-requests");
+      const res = await axios.get("https://circulora-backend.onrender.com/api/production-requests");
       setRequests(res.data || []);
     } catch (err) {
       console.error("Failed to fetch production requests:", err);
@@ -42,7 +42,7 @@ const InventoryRequests = () => {
         payload.approvedAt = new Date().toISOString();
       }
 
-      await axios.put(`http://localhost:5000/api/production-requests/${requestId}/status`, payload);
+      await axios.put(`https://circulora-backend.onrender.com/api/production-requests/${requestId}/status`, payload);
       await fetchProductionRequests();
       alert(`Request ${action.toLowerCase()} successfully!`);
     } catch (err) {

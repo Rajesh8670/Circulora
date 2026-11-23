@@ -9,7 +9,7 @@ import 'jspdf-autotable';
 import ExpenseForm from './ExpenseForm';
 import ExpenseSummary from './ExpenseSummary';
 
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = 'https://circulora-backend.onrender.com/api';
 
 // Format currency helper function
 const formatCurrency = (amount) => {

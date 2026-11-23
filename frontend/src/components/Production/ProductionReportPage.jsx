@@ -18,7 +18,7 @@ const ProductionReportPage = () => {
 
   const fetchAcceptedMaterials = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/production-requests/status/Approved');
+      const res = await axios.get('https://circulora-backend.onrender.com/api/production-requests/status/Approved');
       setAcceptedMaterials(Array.isArray(res.data) ? res.data : []);
     } catch (e) {
       console.error('Report: fetchAcceptedMaterials', e);
@@ -92,7 +92,7 @@ const ProductionReportPage = () => {
 
   const fetchProductionPlans = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/production-plans');
+      const res = await axios.get('https://circulora-backend.onrender.com/api/production-plans');
       setPlans(Array.isArray(res.data?.plans) ? res.data.plans : Array.isArray(res.data) ? res.data : []);
     } catch (e) {
       console.error('Report: fetchProductionPlans', e);
@@ -101,7 +101,7 @@ const ProductionReportPage = () => {
 
   const fetchMachines = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/machines');
+      const res = await axios.get('https://circulora-backend.onrender.com/api/machines');
       setMachines(Array.isArray(res.data?.machines) ? res.data.machines : Array.isArray(res.data) ? res.data : []);
     } catch (e) {
       console.error('Report: fetchMachines', e);
@@ -110,7 +110,7 @@ const ProductionReportPage = () => {
 
   const fetchQuality = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/quality');
+      const res = await axios.get('https://circulora-backend.onrender.com/api/quality');
       setQualityRecords(Array.isArray(res.data?.records) ? res.data.records : Array.isArray(res.data) ? res.data : []);
     } catch (e) {
       console.error('Report: fetchQuality', e);

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { DollarSign, Clock, CreditCard, Loader2, AlertCircle, TrendingUp, Users } from 'lucide-react';
 import axios from 'axios';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+const API_URL = process.env.REACT_APP_API_URL || 'https://circulora-backend.onrender.com/api';
 
 const OverviewCards = () => {
   const [financeData, setFinanceData] = useState({

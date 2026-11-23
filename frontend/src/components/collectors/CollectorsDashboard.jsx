@@ -148,7 +148,7 @@ export default function CollectorsDashboard() {
     try {
       setBinsLoading(true);
       setBinsError("");
-      const res = await axios.get("http://localhost:5000/api/transport/bin-routes", { params: { status: "Active" } });
+      const res = await axios.get("https://circulora-backend.onrender.com/api/transport/bin-routes", { params: { status: "Active" } });
       const payload = res?.data;
       const list = Array.isArray(payload?.data) ? payload.data : Array.isArray(payload) ? payload : [];
       setBinLocations(list);
@@ -260,7 +260,7 @@ export default function CollectorsDashboard() {
   const fetchCollections = async () => {
     try {
       setLoadingCollections(true);
-      const res = await axios.get("http://localhost:5000/api/collections", {
+      const res = await axios.get("https://circulora-backend.onrender.com/api/collections", {
         params: {
           limit: 100,
           dateFrom: appliedFrom || undefined,
@@ -353,7 +353,7 @@ export default function CollectorsDashboard() {
 
   const fetchTransportRequests = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/transport-requests");
+      const res = await axios.get("https://circulora-backend.onrender.com/api/transport-requests");
       const arr = res?.data?.requests || [];
       setTransportReqs(arr);
     } catch (e) {
@@ -615,7 +615,7 @@ export default function CollectorsDashboard() {
       // EDIT: update existing collection
       if (editingId) {
         const pointsToAward = calcPoints('MIXED', qty);
-        await axios.put(`http://localhost:5000/api/collections/${editingId}`, {
+        await axios.put(`https://circulora-backend.onrender.com/api/collections/${editingId}`, {
           quantity: qty,
           location: form.location || selectedLocation || "",
           collectorName: selectedLocManager || "",
@@ -633,7 +633,7 @@ export default function CollectorsDashboard() {
 
       // CREATE: verify user exists
       try {
-        const existsRes = await axios.get("http://localhost:5000/api/users/exists", { params: { phone: form.phone } });
+        const existsRes = await axios.get("https://circulora-backend.onrender.com/api/users/exists", { params: { phone: form.phone } });
         if (!existsRes?.data?.exists) {
           setToast("User not found for this phone. Please create an account first.");
           return;
@@ -645,7 +645,7 @@ export default function CollectorsDashboard() {
 
       const pointsToAward = calcPoints('MIXED', qty);
       // Create collection with manager name as collectorName
-      const createRes = await axios.post("http://localhost:5000/api/collections", {
+      const createRes = await axios.post("https://circulora-backend.onrender.com/api/collections", {
         collectorName: selectedLocManager || "",
         bottleType: 'MIXED',
         quantity: qty,
@@ -659,7 +659,7 @@ export default function CollectorsDashboard() {
 
       // Award points
       try {
-        await axios.post("http://localhost:5000/api/points/award", {
+        await axios.post("https://circulora-backend.onrender.com/api/points/award", {
           phone: form.phone,
           points: pointsToAward,
           reason: 'Bottle collection (Mixed)',
@@ -721,7 +721,7 @@ export default function CollectorsDashboard() {
   const deleteRow = async (c) => {
     const ok = window.confirm("Delete this collection from database?");
     if (!ok) return;
-    await axios.delete(`http://localhost:5000/api/collections/${c._id}`);
+    await axios.delete(`https://circulora-backend.onrender.com/api/collections/${c._id}`);
     if (editingId === c._id) cancelEdit();
     await fetchCollections();
     setToast("Collection deleted.");
@@ -731,7 +731,7 @@ export default function CollectorsDashboard() {
   // Create transport request from selected stock row
   const requestTransport = async (stock) => {
     try {
-      await axios.post("http://localhost:5000/api/transport-requests", {
+      await axios.post("https://circulora-backend.onrender.com/api/transport-requests", {
         collectionId: null,
         collectorName: selectedLocManager || "",
         bottleType: stock.bottleType,
@@ -1579,7 +1579,7 @@ export default function CollectorsDashboard() {
                 title="Enabled when total since last request reaches 20 kg"
                 onClick={async ()=>{
                   try {
-                    await axios.post('http://localhost:5000/api/transport-requests', {
+                    await axios.post('https://circulora-backend.onrender.com/api/transport-requests', {
                       collectionId: null,
                       collectorName: selectedLocManager || '',
                       bottleType: 'Mixed',
@@ -1717,7 +1717,7 @@ export default function CollectorsDashboard() {
                     disabled={r.status !== 'Assigned'}
                     onClick={async ()=>{
                       try {
-                        await axios.post(`http://localhost:5000/api/transport-requests/${r._id}/status`, { status: 'PickedUp' });
+                        await axios.post(`https://circulora-backend.onrender.com/api/transport-requests/${r._id}/status`, { status: 'PickedUp' });
                         setTransportReqs(prev => prev.map(x => x._id === r._id ? { ...x, status: 'PickedUp' } : x));
                         setToast('Marked as handed over.');
                         try { window.dispatchEvent(new CustomEvent('transport:status-updated', { detail: { id: r._id, status: 'PickedUp' } })); } catch {}

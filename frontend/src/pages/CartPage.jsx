@@ -29,7 +29,7 @@ function CartPage() {
 
     try {
       const userId = user.id || user._id;
-      const response = await axios.get(`http://localhost:5000/api/cart?userId=${userId}`);
+      const response = await axios.get(`https://circulora-backend.onrender.com/api/cart?userId=${userId}`);
       setCartItems(response.data.cartItems || []);
     } catch (error) {
       console.error('Error fetching cart items:', error);
@@ -44,7 +44,7 @@ function CartPage() {
     if (newQuantity < 1) return;
     
     try {
-      await axios.put(`http://localhost:5000/api/cart/${itemId}`, { quantity: newQuantity });
+      await axios.put(`https://circulora-backend.onrender.com/api/cart/${itemId}`, { quantity: newQuantity });
       fetchCartItems(); // Refresh cart items
       window.dispatchEvent(new Event('cartUpdated'));
     } catch (error) {
@@ -56,7 +56,7 @@ function CartPage() {
   // Remove item from cart
   const removeItem = async (itemId) => {
     try {
-      await axios.delete(`http://localhost:5000/api/cart/${itemId}`);
+      await axios.delete(`https://circulora-backend.onrender.com/api/cart/${itemId}`);
       fetchCartItems(); // Refresh cart items
       window.dispatchEvent(new Event('cartUpdated'));
     } catch (error) {
@@ -75,7 +75,7 @@ function CartPage() {
 
     try {
       const userId = user.id || user._id;
-      const response = await axios.delete(`http://localhost:5000/api/cart/clear/${userId}`);
+      const response = await axios.delete(`https://circulora-backend.onrender.com/api/cart/clear/${userId}`);
       
       if (response.status === 200) {
         setCartItems([]);

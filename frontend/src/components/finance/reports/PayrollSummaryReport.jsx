@@ -364,7 +364,7 @@ const PayrollSummaryReport = ({ dateRange }) => {
   // Fetch employees data
   const fetchEmployees = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/employees', {
+      const response = await fetch('https://circulora-backend.onrender.com/api/employees', {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -395,7 +395,7 @@ const PayrollSummaryReport = ({ dateRange }) => {
     try {
       setIsLoading(true);
       const [payrollsResponse, employeesData] = await Promise.all([
-        fetch('http://localhost:5000/api/payroll', {
+        fetch('https://circulora-backend.onrender.com/api/payroll', {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`
           }
@@ -535,7 +535,7 @@ const PayrollSummaryReport = ({ dateRange }) => {
         const toDate = dateRange.to ? new Date(dateRange.to).toISOString() : '';
         
         // Try to fetch from the payroll summary endpoint first
-        let response = await fetch(`http://localhost:5000/api/payroll/summary?from=${fromDate}&to=${toDate}`, {
+        let response = await fetch(`https://circulora-backend.onrender.com/api/payroll/summary?from=${fromDate}&to=${toDate}`, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`,
             'Content-Type': 'application/json'
@@ -547,7 +547,7 @@ const PayrollSummaryReport = ({ dateRange }) => {
         // If 404, try the regular payroll endpoint
         if (response.status === 404) {
           console.log('Analytics endpoint not found, trying fallback...');
-          response = await fetch(`http://localhost:5000/api/payroll?from=${fromDate}&to=${toDate}`, {
+          response = await fetch(`https://circulora-backend.onrender.com/api/payroll?from=${fromDate}&to=${toDate}`, {
             headers: {
               'Authorization': `Bearer ${localStorage.getItem('token')}`,
               'Content-Type': 'application/json'

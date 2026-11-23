@@ -68,11 +68,11 @@ export default function InventoryReports() {
     setError("");
     try {
       const [inv, reqs, sum, del, prod] = await Promise.all([
-        axios.get("http://localhost:5000/api/inventory"),
-        axios.get("http://localhost:5000/api/stock-requests"),
-        axios.get("http://localhost:5000/api/stock-requests/summary"),
-        axios.get("http://localhost:5000/api/transport-requests", { params: { status: "Delivered" } }),
-        axios.get("http://localhost:5000/api/production-requests")
+        axios.get("https://circulora-backend.onrender.com/api/inventory"),
+        axios.get("https://circulora-backend.onrender.com/api/stock-requests"),
+        axios.get("https://circulora-backend.onrender.com/api/stock-requests/summary"),
+        axios.get("https://circulora-backend.onrender.com/api/transport-requests", { params: { status: "Delivered" } }),
+        axios.get("https://circulora-backend.onrender.com/api/production-requests")
       ]);
       const invList = Array.isArray(inv.data) ? inv.data : [];
       setMaterials(invList);

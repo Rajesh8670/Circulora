@@ -22,7 +22,7 @@ function BinsPage() {
   // Fetch bin routes from the API
   const fetchBinRoutes = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/transport/bin-routes');
+      const response = await axios.get('https://circulora-backend.onrender.com/api/transport/bin-routes');
       setBinRoutes(response.data.data || []);
       setLastUpdated(new Date());
       setLoading(false);

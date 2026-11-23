@@ -118,7 +118,7 @@ export default function InventoryMaterials() {
   useEffect(() => {
     const fetchInventory = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/inventory");
+        const response = await axios.get("https://circulora-backend.onrender.com/api/inventory");
         // Sort by creation date (oldest first, newest last)
         const sortedData = response.data.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
         setInventory(sortedData);
@@ -244,7 +244,7 @@ export default function InventoryMaterials() {
         // Automatically set lastUpdated to now for edits
         formData.append("lastUpdated", new Date().toISOString());
         const response = await axios.put(
-          `http://localhost:5000/api/inventory/${editItemId}`,
+          `https://circulora-backend.onrender.com/api/inventory/${editItemId}`,
           formData,
           { headers: { "Content-Type": "multipart/form-data" } }
         );
@@ -255,7 +255,7 @@ export default function InventoryMaterials() {
         alert("✅ Item updated successfully!");
       } else {
         const response = await axios.post(
-          "http://localhost:5000/api/inventory/add",
+          "https://circulora-backend.onrender.com/api/inventory/add",
           formData,
           { headers: { "Content-Type": "multipart/form-data" } }
         );
@@ -304,7 +304,7 @@ export default function InventoryMaterials() {
       lastUpdatedDate: item.lastUpdated.split(" ")[0],
       lastUpdatedTime: item.lastUpdated.split(" ")[1],
       image: null,
-      imagePreview: item.imageUrl ? `http://localhost:5000/${item.imageUrl}` : null,
+      imagePreview: item.imageUrl ? `https://circulora-backend.onrender.com/${item.imageUrl}` : null,
     });
     setEditItemId(item._id);
     setShowForm(true);
@@ -314,7 +314,7 @@ export default function InventoryMaterials() {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this item?")) {
       try {
-        await axios.delete(`http://localhost:5000/api/inventory/${id}`);
+        await axios.delete(`https://circulora-backend.onrender.com/api/inventory/${id}`);
         setInventory((prev) => prev.filter((item) => item._id !== id));
         try { window.dispatchEvent(new CustomEvent('inventory:materials-updated')); } catch {}
       } catch (error) {
@@ -615,7 +615,7 @@ export default function InventoryMaterials() {
                         {item.imageUrl ? (
                           <div className="flex justify-center">
                             <img
-                              src={`http://localhost:5000${item.imageUrl}`}
+                              src={`https://circulora-backend.onrender.com${item.imageUrl}`}
                               alt={item.name}
                               className="w-16 h-16 object-cover rounded-lg shadow-sm border border-gray-200"
                               onError={(e) => {

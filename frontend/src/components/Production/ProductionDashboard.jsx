@@ -108,7 +108,7 @@ const ProductionDashboard = () => {
   useEffect(() => {
     const loadSettings = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/points/settings');
+        const res = await axios.get('https://circulora-backend.onrender.com/api/points/settings');
         const rate = res.data?.settings?.pointsPerRupee;
         const updatedAt = res.data?.settings?.updatedAt;
         if (rate !== undefined) setPointsPerRupee(String(rate));
@@ -124,7 +124,7 @@ const ProductionDashboard = () => {
     e.preventDefault();
     try {
       const body = { pointsPerRupee: Number(pointsPerRupee) };
-      const res = await axios.post('http://localhost:5000/api/points/settings', body);
+      const res = await axios.post('https://circulora-backend.onrender.com/api/points/settings', body);
       const updatedAt = res.data?.settings?.updatedAt || new Date().toISOString();
       setPointsSavedAt(updatedAt);
       // Refresh products so updated points reflect in table
@@ -140,7 +140,7 @@ const ProductionDashboard = () => {
   const fetchQualityRecords = async () => {
     try {
       setLoadingQuality(true);
-      const res = await axios.get('http://localhost:5000/api/quality');
+      const res = await axios.get('https://circulora-backend.onrender.com/api/quality');
       const list = res.data?.records || [];
       setQualityRecords(Array.isArray(list) ? list : []);
     } catch (err) {
@@ -254,9 +254,9 @@ const ProductionDashboard = () => {
       };
       let res;
       if (editingQuality) {
-        res = await axios.put(`http://localhost:5000/api/quality/${editingQuality._id}`, payload);
+        res = await axios.put(`https://circulora-backend.onrender.com/api/quality/${editingQuality._id}`, payload);
       } else {
-        res = await axios.post('http://localhost:5000/api/quality', payload);
+        res = await axios.post('https://circulora-backend.onrender.com/api/quality', payload);
       }
       const saved = res.data?.record;
       if (saved) {
@@ -302,7 +302,7 @@ const ProductionDashboard = () => {
   const deleteQuality = async (id) => {
     if (!window.confirm('Delete this quality record?')) return;
     try {
-      await axios.delete(`http://localhost:5000/api/quality/${id}`);
+      await axios.delete(`https://circulora-backend.onrender.com/api/quality/${id}`);
       setQualityRecords((prev) => prev.filter((r) => r._id !== id));
       alert('Quality record deleted');
     } catch (err) {
@@ -320,7 +320,7 @@ const ProductionDashboard = () => {
   const fetchProductionPlans = async () => {
     try {
       setLoadingPlans(true);
-      const response = await axios.get('http://localhost:5000/api/production-plans');
+      const response = await axios.get('https://circulora-backend.onrender.com/api/production-plans');
       const list = response.data?.plans || [];
       setPlans(Array.isArray(list) ? list : []);
     } catch (error) {
@@ -333,7 +333,7 @@ const ProductionDashboard = () => {
   // Fetch machines
   const fetchMachines = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/machines');
+      const response = await axios.get('https://circulora-backend.onrender.com/api/machines');
       const list = response.data?.machines || [];
       setMachines(Array.isArray(list) ? list : []);
     } catch (error) {
@@ -410,9 +410,9 @@ const ProductionDashboard = () => {
       };
       let res;
       if (editingPlan) {
-        res = await axios.put(`http://localhost:5000/api/production-plans/${editingPlan._id}`, payload);
+        res = await axios.put(`https://circulora-backend.onrender.com/api/production-plans/${editingPlan._id}`, payload);
       } else {
-        res = await axios.post('http://localhost:5000/api/production-plans', payload);
+        res = await axios.post('https://circulora-backend.onrender.com/api/production-plans', payload);
       }
       const saved = res.data?.plan;
       if (saved) {
@@ -452,7 +452,7 @@ const ProductionDashboard = () => {
   const deletePlan = async (id) => {
     if (!window.confirm('Delete this plan?')) return;
     try {
-      await axios.delete(`http://localhost:5000/api/production-plans/${id}`);
+      await axios.delete(`https://circulora-backend.onrender.com/api/production-plans/${id}`);
       setPlans((prev) => prev.filter((p) => p._id !== id));
       alert('Plan deleted');
     } catch (err) {
@@ -488,7 +488,7 @@ const ProductionDashboard = () => {
 
   const completePlan = async (plan) => {
     try {
-      const res = await axios.put(`http://localhost:5000/api/production-plans/${plan._id}`, { status: 'Completed' });
+      const res = await axios.put(`https://circulora-backend.onrender.com/api/production-plans/${plan._id}`, { status: 'Completed' });
       const updated = res.data?.plan || null;
       if (updated) {
         setPlans((prev) => prev.map((p) => (p._id === plan._id ? updated : p)));
@@ -619,9 +619,9 @@ const ProductionDashboard = () => {
       };
       let res;
       if (editingMachine) {
-        res = await axios.put(`http://localhost:5000/api/machines/${editingMachine._id}`, payload);
+        res = await axios.put(`https://circulora-backend.onrender.com/api/machines/${editingMachine._id}`, payload);
       } else {
-        res = await axios.post('http://localhost:5000/api/machines', payload);
+        res = await axios.post('https://circulora-backend.onrender.com/api/machines', payload);
       }
       const saved = res.data?.machine;
       if (saved) {
@@ -659,7 +659,7 @@ const ProductionDashboard = () => {
   const deleteMachine = async (id) => {
     if (!window.confirm('Delete this machine?')) return;
     try {
-      await axios.delete(`http://localhost:5000/api/machines/${id}`);
+      await axios.delete(`https://circulora-backend.onrender.com/api/machines/${id}`);
       setMachines((prev) => prev.filter((m) => m._id !== id));
       alert('Machine deleted');
     } catch (err) {
@@ -793,7 +793,7 @@ const ProductionDashboard = () => {
   const fetchInventoryData = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('http://localhost:5000/api/inventory');
+      const response = await axios.get('https://circulora-backend.onrender.com/api/inventory');
       setInventoryItems(response.data);
     } catch (error) {
       console.error('Error fetching inventory:', error);
@@ -807,7 +807,7 @@ const ProductionDashboard = () => {
     try {
       // First check if backend server is running
       try {
-        await axios.get('http://localhost:5000/api/health');
+        await axios.get('https://circulora-backend.onrender.com/api/health');
       } catch (healthError) {
         alert('Backend server is not running. Please start the backend server first.');
         return;
@@ -825,7 +825,7 @@ const ProductionDashboard = () => {
       console.log('Sending request data:', requestData);
       console.log('Selected item:', selectedItem);
       
-      const response = await axios.post('http://localhost:5000/api/production-requests', requestData);
+      const response = await axios.post('https://circulora-backend.onrender.com/api/production-requests', requestData);
       console.log('Request response:', response.data);
       
       // Reset form and close modal
@@ -901,7 +901,7 @@ const ProductionDashboard = () => {
   // Fetch accepted materials
   const fetchAcceptedMaterials = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/production-requests/status/Approved');
+      const response = await axios.get('https://circulora-backend.onrender.com/api/production-requests/status/Approved');
       setAcceptedMaterials(response.data);
     } catch (error) {
       console.error('Error fetching accepted materials:', error);
@@ -911,7 +911,7 @@ const ProductionDashboard = () => {
   // Fetch ALL production requests (for table display)
   const fetchProductionRequests = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/production-requests');
+      const response = await axios.get('https://circulora-backend.onrender.com/api/production-requests');
       setRequests(Array.isArray(response.data) ? response.data : (response.data?.requests || []));
     } catch (error) {
       console.error('Error fetching production requests:', error);
@@ -922,7 +922,7 @@ const ProductionDashboard = () => {
   const fetchProducts = async () => {
     try {
       console.log('Fetching products from database...');
-      const response = await axios.get('http://localhost:5000/api/products');
+      const response = await axios.get('https://circulora-backend.onrender.com/api/products');
       console.log('Products response:', response.data);
       
       if (response.data.products) {
@@ -1045,7 +1045,7 @@ const ProductionDashboard = () => {
     }
 
     try {
-      const response = await axios.delete(`http://localhost:5000/api/products/${productId}`);
+      const response = await axios.delete(`https://circulora-backend.onrender.com/api/products/${productId}`);
       
       if (response.status === 200) {
         // Refresh products list
@@ -1073,7 +1073,7 @@ const ProductionDashboard = () => {
     try {
       // First check if backend server is running
       try {
-        await axios.get('http://localhost:5000/api/health');
+        await axios.get('https://circulora-backend.onrender.com/api/health');
         console.log('Backend server is running');
       } catch (healthError) {
         alert('Backend server is not running. Please start the backend server first.');
@@ -1096,10 +1096,10 @@ const ProductionDashboard = () => {
       let response;
       if (editingProduct) {
         // Update existing product
-        response = await axios.put(`http://localhost:5000/api/products/${editingProduct._id}`, productData);
+        response = await axios.put(`https://circulora-backend.onrender.com/api/products/${editingProduct._id}`, productData);
       } else {
         // Create new product
-        response = await axios.post('http://localhost:5000/api/products', productData);
+        response = await axios.post('https://circulora-backend.onrender.com/api/products', productData);
       }
       
       console.log('Server response:', response.data);

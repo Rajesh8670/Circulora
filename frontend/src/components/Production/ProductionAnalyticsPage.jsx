@@ -34,10 +34,10 @@ const ProductionAnalyticsPage = () => {
     const fetchAll = async () => {
       try {
         const [plansRes, qualRes, machRes, apprRes] = await Promise.all([
-          axios.get("http://localhost:5000/api/production-plans"),
-          axios.get("http://localhost:5000/api/quality"),
-          axios.get("http://localhost:5000/api/machines"),
-          axios.get("http://localhost:5000/api/approved-requests"),
+          axios.get("https://circulora-backend.onrender.com/api/production-plans"),
+          axios.get("https://circulora-backend.onrender.com/api/quality"),
+          axios.get("https://circulora-backend.onrender.com/api/machines"),
+          axios.get("https://circulora-backend.onrender.com/api/approved-requests"),
         ]);
         setPlans(plansRes.data.plans || []);
         setQualityRecords(qualRes.data.records || []);

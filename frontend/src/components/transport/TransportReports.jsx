@@ -13,7 +13,7 @@ export default function TransportReports() {
 
   const fetchBinRoutes = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/transport/bin-routes');
+      const res = await axios.get('https://circulora-backend.onrender.com/api/transport/bin-routes');
       const payload = res?.data;
       const list = Array.isArray(payload?.data) ? payload.data : Array.isArray(payload) ? payload : [];
       setBinRoutes(list);
@@ -21,7 +21,7 @@ export default function TransportReports() {
   };
   const fetchVehicles = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/transport/vehicles');
+      const res = await axios.get('https://circulora-backend.onrender.com/api/transport/vehicles');
       const payload = res?.data;
       const list = Array.isArray(payload?.data) ? payload.data : Array.isArray(payload) ? payload : [];
       setVehicles(list);
@@ -29,7 +29,7 @@ export default function TransportReports() {
   };
   const fetchDrivers = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/employees', { params: { department: 'transport', position: 'Driver', status: 'active' } });
+      const res = await axios.get('https://circulora-backend.onrender.com/api/employees', { params: { department: 'transport', position: 'Driver', status: 'active' } });
       const payload = res?.data;
       const list = Array.isArray(payload?.data) ? payload.data : Array.isArray(payload) ? payload : [];
       setDrivers(list);
@@ -37,15 +37,15 @@ export default function TransportReports() {
   };
   const fetchRequests = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/transport-requests', { params: { status: 'Pending' } });
+      const res = await axios.get('https://circulora-backend.onrender.com/api/transport-requests', { params: { status: 'Pending' } });
       setRequestsPending(res?.data?.requests || []);
     } catch (e) { console.error('fetchRequests failed', e); }
   };
   const fetchAssigned = async () => {
     try {
       const [aRes, dRes] = await Promise.all([
-        axios.get('http://localhost:5000/api/transport-requests', { params: { status: 'Assigned' } }),
-        axios.get('http://localhost:5000/api/transport-requests', { params: { status: 'Delivered' } }),
+        axios.get('https://circulora-backend.onrender.com/api/transport-requests', { params: { status: 'Assigned' } }),
+        axios.get('https://circulora-backend.onrender.com/api/transport-requests', { params: { status: 'Delivered' } }),
       ]);
       const a = aRes?.data?.requests || [];
       const d = dRes?.data?.requests || [];

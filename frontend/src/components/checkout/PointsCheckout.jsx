@@ -39,7 +39,7 @@ const PointsCheckout = () => {
       try {
         const uid = user?._id || user?.id;
         if (!uid) return;
-        const { data } = await axios.get('http://localhost:5000/api/points/balance', { 
+        const { data } = await axios.get('https://circulora-backend.onrender.com/api/points/balance', {
           params: { userId: uid } 
         });
         setPointsBalance(Number(data?.balance || 0));
@@ -77,7 +77,7 @@ const PointsCheckout = () => {
       };
 
       // Call the payProduct endpoint to process the points payment
-      const response = await axios.post('http://localhost:5000/api/points/pay-product', {
+      const response = await axios.post('https://circulora-backend.onrender.com/api/points/pay-product', {
         userId: user?._id || user?.id,
         productId: product.id || product._id,
         quantity: product.quantity || 1

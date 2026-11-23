@@ -27,7 +27,7 @@ import { Fragment } from 'react';
 import axios from 'axios';
 import { format } from 'date-fns';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+const API_URL = process.env.REACT_APP_API_URL || 'https://circulora-backend.onrender.com/api';
 
 // Helper function to calculate order total
 const calculateOrderTotal = (products = []) => {
@@ -648,13 +648,13 @@ export default function PaymentsManagement() {
             // Handle string URLs
             url = file.startsWith('http') || file.startsWith('blob:') 
               ? file 
-              : `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/${file.replace(/^[\\/]+/, '')}`;
+              : `${process.env.REACT_APP_API_URL || 'https://circulora-backend.onrender.com'}/${file.replace(/^[\\/]+/, '')}`;
           } else if (file.url) {
             // Handle object with url property
             url = file.url;
           } else if (file.path) {
             // Handle object with path property
-            const baseUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+            const baseUrl = process.env.REACT_APP_API_URL || 'https://circulora-backend.onrender.com';
             const cleanPath = String(file.path).replace(/^[\\/]+/, '');
             url = `${baseUrl.replace(/\/+$/, '')}/${cleanPath}`;
           } else if (isFile(file)) {

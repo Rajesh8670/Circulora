@@ -129,7 +129,7 @@ const ExpenseBreakdown = ({ expenses = [] }) => {
       setIsLoading(true);
       try {
         console.log('Fetching expenses from API...');
-        const response = await fetch('http://localhost:5000/api/expenses', {
+        const response = await fetch('https://circulora-backend.onrender.com/api/expenses', {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('token')}`

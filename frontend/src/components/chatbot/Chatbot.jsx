@@ -39,7 +39,7 @@ const Chatbot = () => {
 
   const loadChatHistory = async (sessionId) => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/chatbot/history/${sessionId}`, {
+      const response = await axios.get(`https://circulora-backend.onrender.com/api/chatbot/history/${sessionId}`, {
         timeout: 5000,
         headers: {
           'Content-Type': 'application/json'
@@ -81,7 +81,7 @@ const Chatbot = () => {
     setIsTyping(true);
 
     try {
-      const response = await axios.post('http://localhost:5000/api/chatbot/chat', {
+      const response = await axios.post('https://circulora-backend.onrender.com/api/chatbot/chat', {
         message: messageText,
         sessionId: sessionId,
         userId: localStorage.getItem('userId') || null,

@@ -110,7 +110,7 @@ export default function TransportDashboard() {
   const fetchBinRoutes = async () => {
     try {
       setLoadingBinRoutes(true);
-      const res = await axios.get('http://localhost:5000/api/transport/bin-routes', {
+      const res = await axios.get('https://circulora-backend.onrender.com/api/transport/bin-routes', {
         params: {
           search: binFilters.search || undefined,
           status: binFilters.status || undefined,
@@ -269,7 +269,7 @@ export default function TransportDashboard() {
   const fetchRoutesList = async () => {
     try {
       setLoadingRoutesList(true);
-      const res = await axios.get('http://localhost:5000/api/transport/routes');
+      const res = await axios.get('https://circulora-backend.onrender.com/api/transport/routes');
       const payload = res?.data;
       const list = Array.isArray(payload) ? payload : Array.isArray(payload?.data) ? payload.data : payload || [];
       setRoutesList(list);
@@ -351,7 +351,7 @@ export default function TransportDashboard() {
   const fetchDriversList = async () => {
     try {
       setLoadingDriversList(true);
-      const res = await axios.get('http://localhost:5000/api/employees', {
+      const res = await axios.get('https://circulora-backend.onrender.com/api/employees', {
         params: { department: 'transport', position: 'Driver', status: 'active' }
       });
       const payload = res?.data;
@@ -384,7 +384,7 @@ export default function TransportDashboard() {
       // Load rejected (cancelled) count
       (async ()=>{
         try {
-          const res = await axios.get('http://localhost:5000/api/transport-requests', { params: { status: 'Cancelled' } });
+          const res = await axios.get('https://circulora-backend.onrender.com/api/transport-requests', { params: { status: 'Cancelled' } });
           const arr = res?.data?.requests || [];
           setRejectedCount(Array.isArray(arr) ? arr.length : 0);
         } catch (e) { console.error('Failed to fetch rejected count', e); setRejectedCount(0); }
@@ -412,7 +412,7 @@ export default function TransportDashboard() {
   const fetchRequests = async () => {
     try {
       setLoadingRequests(true);
-      const res = await axios.get('http://localhost:5000/api/transport-requests', { params: { status: 'Pending' } });
+      const res = await axios.get('https://circulora-backend.onrender.com/api/transport-requests', { params: { status: 'Pending' } });
       const arr = res?.data?.requests || [];
       setRequests(arr);
     } catch (err) { console.error('Failed to fetch requests', err); }
@@ -427,9 +427,9 @@ export default function TransportDashboard() {
     try {
       setLoadingAssigned(true);
       const [aRes, pRes, dRes] = await Promise.all([
-        axios.get('http://localhost:5000/api/transport-requests', { params: { status: 'Assigned' } }),
-        axios.get('http://localhost:5000/api/transport-requests', { params: { status: 'PickedUp' } }),
-        axios.get('http://localhost:5000/api/transport-requests', { params: { status: 'Delivered' } }),
+        axios.get('https://circulora-backend.onrender.com/api/transport-requests', { params: { status: 'Assigned' } }),
+        axios.get('https://circulora-backend.onrender.com/api/transport-requests', { params: { status: 'PickedUp' } }),
+        axios.get('https://circulora-backend.onrender.com/api/transport-requests', { params: { status: 'Delivered' } }),
       ]);
       const a = aRes?.data?.requests || [];
       const p = pRes?.data?.requests || [];
@@ -565,7 +565,7 @@ export default function TransportDashboard() {
                 if (scheduledAt && new Date(scheduledAt) < new Date()) { setAssignNotice({ type:'error', text:'Pickup schedule must be in the future.' }); return; }
                 if (!selectedVehicleId) { setAssignNotice({ type:'error', text:'Please select an active vehicle' }); return; }
                 setAssignSubmitting(true);
-                await axios.post(`http://localhost:5000/api/transport-requests/${assignRequestId}/assign-driver`, {
+                await axios.post(`https://circulora-backend.onrender.com/api/transport-requests/${assignRequestId}/assign-driver`, {
                   driverId: selectedDriverId,
                   scheduledAt,
                   vehicleId: selectedVehicleId,
@@ -595,7 +595,7 @@ export default function TransportDashboard() {
   const fetchVehiclesList = async () => {
     try {
       setLoadingVehiclesList(true);
-      const res = await axios.get('http://localhost:5000/api/transport/vehicles', {
+      const res = await axios.get('https://circulora-backend.onrender.com/api/transport/vehicles', {
         params: {
           search: vehicleSearch || undefined,
           type: vehicleTypeFilter || undefined,
@@ -1071,7 +1071,7 @@ export default function TransportDashboard() {
                         // Fetch drivers list
                         try {
                           setLoadingDrivers(true);
-                          const res = await axios.get('http://localhost:5000/api/employees', {
+                          const res = await axios.get('https://circulora-backend.onrender.com/api/employees', {
                             params: { department: 'transport', position: 'Driver', status: 'active' }
                           });
                           const payload = res?.data;
@@ -1088,7 +1088,7 @@ export default function TransportDashboard() {
                         // Fetch active vehicles for display in Assign modal
                         try {
                           setLoadingVehiclesAssign(true);
-                          const vres = await axios.get('http://localhost:5000/api/transport/vehicles', {
+                          const vres = await axios.get('https://circulora-backend.onrender.com/api/transport/vehicles', {
                             params: { status: 'Active' }
                           });
                           const vpayload = vres?.data;
@@ -1100,7 +1100,7 @@ export default function TransportDashboard() {
                       }}>Assign</Button>
                       <Button size="sm" variant="outline" onClick={async ()=>{
                         try {
-                          await axios.post(`http://localhost:5000/api/transport-requests/${r._id}/status`, { status: 'Cancelled' });
+                          await axios.post(`https://circulora-backend.onrender.com/api/transport-requests/${r._id}/status`, { status: 'Cancelled' });
                           fetchRequests();
                         } catch (err) { console.error(err); }
                       }}>Reject</Button>
@@ -1225,7 +1225,7 @@ export default function TransportDashboard() {
                     <Button variant="outline" onClick={()=>{ setEditingBinId(null); }}>Cancel</Button>
                     <Button className="bg-blue-600 text-white" onClick={async ()=>{
                       try {
-                        await axios.put(`http://localhost:5000/api/transport/bin-routes/${r._id || r.id}` , {
+                        await axios.put(`https://circulora-backend.onrender.com/api/transport/bin-routes/${r._id || r.id}` , {
                           location: editingBinData.location,
                           city: editingBinData.city,
                           managerName: editingBinData.managerName,
@@ -1264,7 +1264,7 @@ export default function TransportDashboard() {
                     <Button variant="outline" className="text-red-600" onClick={async ()=>{
                       try {
                         if (!window.confirm('Remove this bin route?')) return;
-                        await axios.delete(`http://localhost:5000/api/transport/bin-routes/${r._id || r.id}`);
+                        await axios.delete(`https://circulora-backend.onrender.com/api/transport/bin-routes/${r._id || r.id}`);
                         fetchBinRoutes();
                       } catch (err) { console.error('Remove bin route failed', err); }
                     }}>Remove</Button>
@@ -1343,7 +1343,7 @@ export default function TransportDashboard() {
                 try {
                   const { valid } = validateAddBinRouteForm();
                   if (!valid) return;
-                  await axios.post('http://localhost:5000/api/transport/bin-routes', {
+                  await axios.post('https://circulora-backend.onrender.com/api/transport/bin-routes', {
                     location: addBinRouteForm.location.trim(),
                     managerName: addBinRouteForm.managerName.trim(),
                     status: addBinRouteForm.status,
@@ -1447,7 +1447,7 @@ export default function TransportDashboard() {
                           <button className="px-3 py-1 border rounded text-red-600" onClick={async () => {
                             if (!window.confirm('Delete this vehicle permanently?')) return;
                             try {
-                              await axios.delete(`http://localhost:5000/api/transport/vehicles/${v._id}`);
+                              await axios.delete(`https://circulora-backend.onrender.com/api/transport/vehicles/${v._id}`);
                               fetchVehiclesList();
                             } catch (err) { console.error('Delete vehicle failed', err); }
                           }}>Remove</button>
@@ -1706,7 +1706,7 @@ export default function TransportDashboard() {
                     return;
                   }
                   const payload = mapFormToVehiclePayload(form);
-                  await axios.post('http://localhost:5000/api/transport/vehicles', payload);
+                  await axios.post('https://circulora-backend.onrender.com/api/transport/vehicles', payload);
                   window.alert('Vehicle created successfully');
                   setShowAddVehicle(false);
                   setAddVehicleForm({
@@ -1848,7 +1848,7 @@ export default function TransportDashboard() {
                       status: editVehicleForm.maintenanceStatus,
                     },
                   };
-                  await axios.put(`http://localhost:5000/api/transport/vehicles/${editingVehicle._id}`, payload);
+                  await axios.put(`https://circulora-backend.onrender.com/api/transport/vehicles/${editingVehicle._id}`, payload);
                   setShowEditVehicle(false);
                   setEditingVehicle(null);
                   fetchVehiclesList();

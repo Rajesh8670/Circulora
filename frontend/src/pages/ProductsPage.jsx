@@ -26,7 +26,7 @@ function ProductsPage() {
 
       try {
         const userId = user.id || user._id;
-        const response = await fetch(`http://localhost:5000/api/cart?userId=${userId}`);
+        const response = await fetch(`https://circulora-backend.onrender.com/api/cart?userId=${userId}`);
         const data = await response.json();
         
         if (data.cartItems) {
@@ -56,7 +56,7 @@ function ProductsPage() {
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('http://localhost:5000/api/products');
+      const response = await axios.get('https://circulora-backend.onrender.com/api/products');
       
       if (response.data.products) {
         // Transform backend products to match frontend format

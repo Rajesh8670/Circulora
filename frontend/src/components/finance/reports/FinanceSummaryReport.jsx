@@ -37,7 +37,7 @@ const formatDate = (date, formatStr = 'MMM d, yyyy') => {
   }
 };
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+const API_URL = process.env.REACT_APP_API_URL || 'https://circulora-backend.onrender.com/api';
 
 const FinanceSummaryReport = ({ dateRange }) => {
   const [isLoading, setIsLoading] = useState(true);

@@ -20,7 +20,7 @@ function ProductCard({ product }) {
         const saved = localStorage.getItem('pointsPerRupee');
         if (saved !== null) setPointsPerRupee(saved);
 
-        const response = await axios.get('http://localhost:5000/api/points/settings');
+        const response = await axios.get('https://circulora-backend.onrender.com/api/points/settings');
         const rate = response.data?.settings?.pointsPerRupee;
         if (rate !== undefined) {
           setPointsPerRupee(String(rate));
@@ -39,7 +39,7 @@ function ProductCard({ product }) {
         if (!isAuthenticated()) return;
         const uid = user?._id || user?.id;
         if (!uid) return;
-        const { data } = await axios.get('http://localhost:5000/api/points/balance', { params: { userId: uid } });
+        const { data } = await axios.get('https://circulora-backend.onrender.com/api/points/balance', { params: { userId: uid } });
         setPointsBalance(Number(data?.balance || 0));
       } catch (e) {
         // silent fail
@@ -74,7 +74,7 @@ function ProductCard({ product }) {
         userId: user.id || user._id
       };
 
-      const response = await axios.post('http://localhost:5000/api/cart/add', cartData);
+      const response = await axios.post('https://circulora-backend.onrender.com/api/cart/add', cartData);
 
       if (response.status === 200 || response.status === 201) {
         window.dispatchEvent(new Event('cartUpdated'));

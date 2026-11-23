@@ -72,7 +72,7 @@ export default function InventoryStockManagement() {
     try {
       setLoading(true);
       // Use backend summary: availableKg already accounts for delivered minus requested
-      const res = await axios.get("http://localhost:5000/api/stock-requests/summary");
+      const res = await axios.get("https://circulora-backend.onrender.com/api/stock-requests/summary");
       const available = Number(res.data?.availableKg ?? 0);
       setDeliveredTotalKg(available);
     } catch (err) {
@@ -114,7 +114,7 @@ export default function InventoryStockManagement() {
       return;
     }
     try {
-      const res = await axios.put(`http://localhost:5000/api/stock-requests/${editingId}`, { weightKg: newWeight });
+      const res = await axios.put(`https://circulora-backend.onrender.com/api/stock-requests/${editingId}`, { weightKg: newWeight });
       setRequests((prev) => prev.map((r) => ((r._id || r.id) === editingId ? res.data : r)));
       // Refresh summary to reflect new available amount
       fetchDeliveredTotal();
@@ -127,7 +127,7 @@ export default function InventoryStockManagement() {
   const fetchMaterials = async () => {
     try {
       setLoadingMaterials(true);
-      const res = await axios.get("http://localhost:5000/api/inventory");
+      const res = await axios.get("https://circulora-backend.onrender.com/api/inventory");
       // Inventory items are considered raw materials list
       const list = Array.isArray(res?.data) ? res.data : (Array.isArray(res?.data?.materials) ? res.data.materials : []);
       setMaterials(list);
@@ -142,7 +142,7 @@ export default function InventoryStockManagement() {
   const fetchProducts = async () => {
     try {
       setLoadingProducts(true);
-      const res = await axios.get('http://localhost:5000/api/products');
+      const res = await axios.get('https://circulora-backend.onrender.com/api/products');
       const list = Array.isArray(res.data?.products) ? res.data.products : (Array.isArray(res.data) ? res.data : []);
       setProducts(list);
     } catch (err) {
@@ -160,7 +160,7 @@ export default function InventoryStockManagement() {
     // Load existing requests from backend
     (async () => {
       try {
-        const listRes = await axios.get('http://localhost:5000/api/stock-requests');
+        const listRes = await axios.get('https://circulora-backend.onrender.com/api/stock-requests');
         setRequests(Array.isArray(listRes.data) ? listRes.data : []);
       } catch (err) {
         console.error('Failed to load stock requests list', err);
@@ -192,7 +192,7 @@ export default function InventoryStockManagement() {
       return;
     }
     try {
-      const res = await axios.post('http://localhost:5000/api/stock-requests', { weightKg: weight });
+      const res = await axios.post('https://circulora-backend.onrender.com/api/stock-requests', { weightKg: weight });
       // Prepend created request from backend
       setRequests((prev) => [res.data, ...prev]);
       setShowRequestForm(false);

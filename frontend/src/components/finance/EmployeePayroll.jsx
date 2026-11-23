@@ -39,7 +39,7 @@ export default function EmployeePayroll() {
   // Fetch employees data with authentication
   const fetchEmployees = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/employees', {
+      const response = await fetch('https://circulora-backend.onrender.com/api/employees', {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -210,7 +210,7 @@ export default function EmployeePayroll() {
       let response;
       if (isUpdate) {
         // For updates, use the update endpoint
-        response = await fetch(`http://localhost:5000/api/payroll/${payrollData._id}`, {
+        response = await fetch(`https://circulora-backend.onrender.com/api/payroll/${payrollData._id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -220,7 +220,7 @@ export default function EmployeePayroll() {
         });
       } else {
         // For new records, use the create endpoint
-        response = await fetch('http://localhost:5000/api/payroll', {
+        response = await fetch('https://circulora-backend.onrender.com/api/payroll', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -297,7 +297,7 @@ export default function EmployeePayroll() {
     try {
       setViewPayslip(prev => ({ ...prev, isLoading: true, isOpen: true }));
       
-      const response = await fetch(`http://localhost:5000/api/payroll/payslip/${payroll._id}`, {
+      const response = await fetch(`https://circulora-backend.onrender.com/api/payroll/payslip/${payroll._id}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -355,7 +355,7 @@ export default function EmployeePayroll() {
       }
 
       // Otherwise, fetch the payslip
-      const response = await fetch(`http://localhost:5000/api/payroll/payslip/${payroll._id}`, {
+      const response = await fetch(`https://circulora-backend.onrender.com/api/payroll/payslip/${payroll._id}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -396,7 +396,7 @@ export default function EmployeePayroll() {
 
     try {
       setIsLoading(true);
-      const response = await fetch(`http://localhost:5000/api/payroll/${payrollId}`, {
+      const response = await fetch(`https://circulora-backend.onrender.com/api/payroll/${payrollId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`

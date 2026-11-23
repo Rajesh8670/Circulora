@@ -78,7 +78,7 @@ const departmentData = [
   { name: "Admin", users: 8, color: "#6B7280" },
 ];
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+const API_URL = process.env.REACT_APP_API_URL || 'https://circulora-backend.onrender.com/api';
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState("users");

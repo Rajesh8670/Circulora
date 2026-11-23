@@ -49,7 +49,7 @@ export default function InventoryDashboard() {
 
   const fetchInventory = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/inventory");
+      const res = await axios.get("https://circulora-backend.onrender.com/api/inventory");
       setInventory(res.data);
     } catch (err) {
       console.error("Failed to fetch inventory:", err);
@@ -74,7 +74,7 @@ export default function InventoryDashboard() {
 
   const fetchRequests = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/production-requests");
+      const res = await axios.get("https://circulora-backend.onrender.com/api/production-requests");
       if (Array.isArray(res.data)) {
         const pending = res.data.filter(r => (r.status || '').toLowerCase() === 'pending').length;
         setRequestCount(pending);
@@ -315,7 +315,7 @@ export default function InventoryDashboard() {
               <div key={item._id} className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300">
                 {item.imageUrl ? (
                   <img
-                    src={`http://localhost:5000${item.imageUrl}`}
+                    src={`https://circulora-backend.onrender.com${item.imageUrl}`}
                     alt={item.name}
                     className="w-full h-48 object-cover rounded-xl mb-4"
                   />

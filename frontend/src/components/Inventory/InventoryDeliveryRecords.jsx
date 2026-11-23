@@ -24,7 +24,7 @@ export default function InventoryDeliveryRecords() {
   const fetchDrivers = async () => {
     try {
       setLoadingDrivers(true);
-      const res = await axios.get("http://localhost:5000/api/transport/drivers");
+      const res = await axios.get("https://circulora-backend.onrender.com/api/transport/drivers");
       const payload = res?.data;
       const list = Array.isArray(payload)
         ? payload
@@ -43,7 +43,7 @@ export default function InventoryDeliveryRecords() {
 
   const fetchEmployees = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/employees");
+      const res = await axios.get("https://circulora-backend.onrender.com/api/employees");
       const payload = res?.data;
       const list = Array.isArray(payload)
         ? payload
@@ -62,9 +62,9 @@ export default function InventoryDeliveryRecords() {
     try {
       setLoading(true);
       const [assignedRes, pickedUpRes, deliveredRes] = await Promise.all([
-        axios.get("http://localhost:5000/api/transport-requests", { params: { status: "Assigned" } }),
-        axios.get("http://localhost:5000/api/transport-requests", { params: { status: "PickedUp" } }),
-        axios.get("http://localhost:5000/api/transport-requests", { params: { status: "Delivered" } }),
+        axios.get("https://circulora-backend.onrender.com/api/transport-requests", { params: { status: "Assigned" } }),
+        axios.get("https://circulora-backend.onrender.com/api/transport-requests", { params: { status: "PickedUp" } }),
+        axios.get("https://circulora-backend.onrender.com/api/transport-requests", { params: { status: "Delivered" } }),
       ]);
       const a = assignedRes?.data?.requests || [];
       const p = pickedUpRes?.data?.requests || [];
@@ -124,7 +124,7 @@ export default function InventoryDeliveryRecords() {
 
   const markDelivered = async (row) => {
     try {
-      await axios.post(`http://localhost:5000/api/transport-requests/${row._id}/status`, { status: 'Delivered' });
+      await axios.post(`https://circulora-backend.onrender.com/api/transport-requests/${row._id}/status`, { status: 'Delivered' });
       await fetchRequests();
     } catch (err) {
       console.error('Mark delivered failed', err);
