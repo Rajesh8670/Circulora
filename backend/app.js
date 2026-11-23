@@ -1,0 +1,155 @@
+require("dotenv").config();
+
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const path = require("path");
+const app = express();
+
+
+// Import routes
+
+const userRoutes = require("./Routes/UserRoutes");
+const inventoryRoutes = require("./Routes/InventoryRoutes");
+const productionRequestRoutes = require("./Routes/ProductionRequestRoutes");
+const paymentRoutes = require("./Routes/PaymentRoutes");
+const productRoutes = require("./Routes/ProductRoutes");
+const cartRoutes = require("./Routes/CartRoutes");
+const employeeRoutes = require("./Routes/EmployeeRoutes");
+const payrollRoutes = require("./Routes/PayrollRoutes");
+const transportRoutes = require("./Routes/TransportRoutes");
+const vehicleRoutes = require("./Routes/VehicleRoutes");
+const binRouteRoutes = require("./Routes/BinRouteRoutes");
+const collectionRoutes = require("./Routes/CollectionRoutes");
+const pointsRoutes = require("./Routes/PointsRoutes");
+const transportRequestRoutes = require("./Routes/TransportRequestRoutes");
+const salesRoutes = require("./Routes/SalesRoutes");
+const productionPlanRoutes = require("./Routes/ProductionPlanRoutes");
+const machineRoutes = require("./Routes/MachineRoutes");
+const qualityRoutes = require("./Routes/QualityRoutes");
+const stockProductionRequestRoutes = require("./Routes/StockProductionRequestRoutes");
+const expenseRoutes = require("./Routes/ExpenseRoutes");
+const chatbotRoutes = require("./Routes/ChatbotRoutes");
+
+
+// CORS Configuration
+
+const corsOptions = {
+
+    origin: ['http://localhost:3000', 'http://localhost:3001', 'http://127.0.0.1:3000'],
+
+    credentials: true,
+
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+
+};
+
+// Middleware
+app.use(cors(corsOptions));
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+// Serve static files
+
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+
+// API Routes
+app.use("/api/users", userRoutes);
+app.use("/api/inventory", inventoryRoutes);
+app.use("/api/production-requests", productionRequestRoutes);
+app.use("/api/expenses", expenseRoutes);
+app.use("/api/finance", paymentRoutes);
+app.use("/api/products", productRoutes);
+app.use("/api/cart", cartRoutes);
+app.use("/api/employees", employeeRoutes);
+app.use("/api/payroll", payrollRoutes);
+app.use("/api/expenses", expenseRoutes);
+app.use("/api/transport", transportRoutes);
+app.use("/api/vehicles", vehicleRoutes);
+app.use("/api/transport", vehicleRoutes);
+app.use("/api/transport", binRouteRoutes);
+
+
+// Collectors pages required endpoints
+
+app.use("/api/collections", collectionRoutes);
+app.use("/api/points", pointsRoutes);
+app.use("/api/transport-requests", transportRequestRoutes);
+app.use("/api/sales", salesRoutes);
+app.use("/api/production-plans", productionPlanRoutes);
+app.use("/api/machines", machineRoutes);
+app.use("/api/quality", qualityRoutes);
+app.use("/api/stock-requests", stockProductionRequestRoutes);
+app.use("/api/chatbot", chatbotRoutes);
+
+// Health check endpoint
+
+app.get('/api/health', (req, res) => {
+
+    res.status(200).json({ 
+        success: true, 
+        message: 'Circulora API is running',
+        timestamp: new Date().toISOString()
+    });
+});
+// Registration form endpoint
+app.get('/register', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'register.html'));
+});
+
+// Root endpoint
+app.get('/', (req, res) => {
+    res.json({ 
+        success: true,
+        message: 'Welcome to Circulora API',
+        endpoints: {
+            users: '/api/users',
+            register: '/register',
+            health: '/api/health'
+        }
+    });
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error('Error:', err.stack);
+    res.status(500).json({
+        success: false,
+        message: 'Something went wrong!',
+        error: process.env.NODE_ENV === 'development' ? err.message : 'Internal server error'
+    });
+});
+// 404 handler
+app.use('*', (req, res) => {
+    res.status(404).json({ 
+        success: false,
+        message: 'Endpoint not found'
+    });
+}); 
+// Connect to MongoDB using local environment configuration.
+if (!process.env.MONGODB_URI || !process.env.JWT_SECRET) {
+    console.error("Missing backend configuration. Set MONGODB_URI and JWT_SECRET in backend/.env.");
+    process.exit(1);
+}
+
+mongoose.connect(process.env.MONGODB_URI)
+
+.then(() => console.log("Connected to MongoDB"))
+.then(() => {
+    // Start the server
+
+    const PORT = process.env.PORT || 5000;
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+
+    });
+
+})
+
+.catch(err => console.error("Failed to connect to MongoDB", err));
+
+
+//test comment

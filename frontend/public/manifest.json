@@ -1,0 +1,16 @@
+{
+  "short_name": "Circulora",
+  "name": "Circulora Recycling Platform",
+  "icons": [
+    {
+      "src": "circulora-logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#13866b",
+  "background_color": "#ffffff"
+}
